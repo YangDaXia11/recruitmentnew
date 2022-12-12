@@ -1,0 +1,5 @@
+2022-12-11 09:08:40,795 django.utils.autoreload 677 INFO     Watching for file changes with StatReloader
+2022-12-11 09:09:20,049 django.request 241 WARNING  Not Found: /favicon.ico
+2022-12-11 09:26:10,586 django.request 241 WARNING  Not Found: /favicon.ico
+2022-12-11 09:26:57,893 interview.admin 36 INFO     admin exported 1 candidate records
+2022-12-11 09:41:39,996 django.utils.autoreload 266 INFO     D:\django\recruitmentnew\manage.py changed, reloading.

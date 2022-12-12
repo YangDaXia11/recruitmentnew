@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../谷歌下载/django-master/.idea/django-master.iml" filepath="$PROJECT_DIR$/../../谷歌下载/django-master/.idea/django-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../range-backend/.idea/range-backend.iml" filepath="$PROJECT_DIR$/../range-backend/.idea/range-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/recruitmentnew.iml" filepath="$PROJECT_DIR$/.idea/recruitmentnew.iml" />
+    </modules>
+  </component>
+</project>
