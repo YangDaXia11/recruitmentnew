@@ -26,10 +26,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#当外部用户注册时，注册完成后直接跳转到首页
+LOGIN_REDIRECT_URL = '/'
+SIMPLE_BACKEND_REDIRECT_URL = '/accounts/login'
+
 # Application definition
 INTERNAL_IPS = ['127.0.0.1']
 
 INSTALLED_APPS = [
+    'grappelli',    #（更换django原有的主题为'grappelli',）主题必须在其他应用前面
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,10 +46,12 @@ INSTALLED_APPS = [
     'interview',
     'debug_toolbar',
     'django_python3_ldap',
+    'bootstrap4',
 
 ]
 
 MIDDLEWARE = [
+    'interview.performance.performance_logger_middleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -148,46 +156,44 @@ LOGGING = {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
         },
-        # 'file': {  # 将日志发送到指定的文件地址
-        #     # 'level': 'INFO',
-        #     'class': 'logging.FileHandler',
-        #     'formatter': 'simple',
-        #     'filename': os.path.join(LOG_DIR, '../logs/recruitment.admin.log'),
-        # },
-
-        # 'performance': {
-        #     # 'level': 'INFO',
-        #     'class': 'logging.FileHandler',
-        #     'formatter': 'simple',
-        #     'filename': os.path.join(LOG_DIR, '../logs/recruitment.performance.log'),
-        # },
+        'file': {  # 将日志发送到指定的文件地址
+            # 'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'simple',
+            'filename': os.path.join(os.path.dirname(BASE_DIR), 'recruitment.admin.log'),
+        },
+        'performance': {     #为自定义的计时中间件添加日志
+            #'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'simple',
+            'filename': os.path.join(os.path.dirname(BASE_DIR), 'recruitment.performance.log'),
+        },
     },
 
-    # 'root': {
-    #     'handlers': ['console', 'file'],     #设置同时在控制台和文件输出日志
-    #     # 'handlers': ['console', ],
-    #     'level': 'INFO',
-    # },
+    'root': {
+        'handlers': ['console', 'file'],     #设置同时在控制台和文件输出日志
+        # 'handlers': ['console', ],
+        'level': 'INFO',
+    },
 
-    # 'loggers': {     #自定义的django_python3_ldap的日志
-    #     "django_python3_ldap": {
-    #         "handlers": ["console", "file"],
-    #         "level": "DEBUG",      #DEBUG级别的才会记录下来
-    #     },
-    #
-    #     "interview.performance": {
-    #         "handlers": ["console", "performance"],
-    #         "level": "INFO",
-    #         "propagate": False,
-    #     },
-    # },
+    'loggers': {     #自定义的django_python3_ldap的日志
+        # "django_python3_ldap": {
+        #     "handlers": ["console", "file"],
+        #     "level": "DEBUG",      #DEBUG级别的才会记录下来
+        # },
+
+        "interview.performance": {
+            "handlers": ["console", "performance"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
 }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # LDAP配置
-# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # LDAP_AUTH_URL = "ldap:/172.27.16.1:389/"
 # LDAP_AUTH_URL = "ldap:/localhost:389/"
 # LDAP_AUTH_USE_TLS = False
@@ -205,3 +211,7 @@ LOGGING = {
 # LDAO_AUTH_CONNECTION_USERNAME = None
 # LDAP_AUTH_CONNECTION_PASSWORD = None
 # AUTHENTICATION_BACKENDS = {'django_python3_ldap.auth.LDAPBackend', 'django.contrib.auth.backends.ModelBackend',}
+
+## 钉钉群的 WEB_HOOK， 用于发送钉钉消息
+#添加钉钉消息通知
+DINGTALK_WEB_HOOK = 'https://oapi.dingtalk.com/robot/send?access_token=9fffd47ef7d16cd09a7d1371ff4ffabc7f56fe63dc8e9b8bb5cff692fa850766'

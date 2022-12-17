@@ -16,18 +16,31 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from django.utils.translation import gettext as _
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('jobs.urls')),
-    path('', include('interview.urls'))
+    path('grappelli/', include('grappelli.urls')),
+    path('admin/', admin.site.urls),
+    path('', include('interview.urls')),
+    path('', include('interview.urls')),
+    path('accounts/', include('registration.backends.simple.urls')),
 ]
-
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-        path('admin/', admin.site.urls),
         path('', include('jobs.urls')),
-        path('', include('interview.urls'))
+        path('__debug__/', include(debug_toolbar.urls)),
+        path('grappelli/', include('grappelli.urls')),
+        path('admin/', admin.site.urls),
+        path('', include('interview.urls')),
+        path('accounts/', include('registration.backends.simple.urls')),  # django的registra包的固定写法
     ]
+
+# 调整 adminsite 基本信息
+# admin.site.site_title= 站点标题
+# admin.site.site_header= 站点头
+# admin.site.index_title= 首页标题
+admin.site.site_header = _('招聘网站系统')  # 设置后台的标题
+# admin.site.index_title = _('应聘者信息')
+# admin.site.site_title = _('应聘者')
